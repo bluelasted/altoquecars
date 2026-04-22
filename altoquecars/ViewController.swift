@@ -46,6 +46,7 @@ class ViewController: UIViewController {
                     
                     let datos = document.data()
                     let rol = datos?["Rol"] as? String ?? "Cliente"
+                    let nombre = datos?["Nombre"] as? String ?? "Usuario"
                     
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
                     } else {
                         if let homeVC = storyboard.instantiateViewController(withIdentifier: "Home") as? HomeVC {
                             homeVC.correo = correo
+                            homeVC.nombre = nombre
                             homeVC.modalPresentationStyle = .fullScreen
                             self.present(homeVC, animated: true)
                         }
