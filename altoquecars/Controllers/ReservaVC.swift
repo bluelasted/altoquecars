@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class ReservaVC: UIViewController {
 
     var autoSeleccionado: Auto?
+    let db = Firestore.firestore()
 
     @IBOutlet weak var imgAuto: UIImageView!
     @IBOutlet weak var lblAuto: UILabel!
@@ -45,9 +47,53 @@ class ReservaVC: UIViewController {
             present(alerta, animated: true)
             return
         }
-
-        let alerta = UIAlertController(title: "Éxito", message: "Reserva enviada correctamente", preferredStyle: .alert)
-        alerta.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alerta, animated: true)
+        
+        guard let auto = autoSeleccionado else {
+            let alerta = UIAlertController(title: "Error", message: "No se seleccionó ningún auto", preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alerta, animated: true)
+            return
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy HH:mm"
+        
+        let fechaInicio = formatter.string(from: dpFechaInicio.date)
+        let fechaFin = formatter.string(from: dpFechaFin.date)
+        
+        let ref = db.collection("Reservas").document()
+        
+        ref.setData([
+            "idReserva": ref.documentID,
+            "nombre": txtNombre.text ?? "",
+            "dni": txtDni.text ?? "",
+            "correo": txtCorreo.text ?? "",
+            "telefono": txtTelefono.text ?? "",
+            "fechaInicio": fechaInicio,
+            "fechaFin": fechaFin,
+            "autoMarca": auto.marca,
+            "autoModelo": auto.modelo,
+            "autoImagen": auto.imagen,
+            "autoPrecio": auto.precio
+        ]) { error in
+            if let error = error {
+                let alerta = UIAlertController(title: "Error", message: "No se pudo guardar la reserva: \(error.localizedDescription)", preferredStyle: .alert)
+                alerta.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alerta, animated: true)
+            } else {
+                let alerta = UIAlertController(title: "Éxito", message: "Reserva enviada correctamente", preferredStyle: .alert)
+                alerta.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                    self.limpiarCampos()
+                })
+                self.present(alerta, animated: true)
+            }
+        }
+    }
+    
+    func limpiarCampos() {
+        txtNombre.text = ""
+        txtDni.text = ""
+        txtCorreo.text = ""
+        txtTelefono.text = ""
     }
 }

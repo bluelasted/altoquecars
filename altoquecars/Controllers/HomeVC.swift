@@ -5,6 +5,7 @@
 //  Created by Jairo on 11/04/26.
 //
 // Jennifer add btnCerrar
+//Jennifer modificacion de algunas cosas
 
 import UIKit
 import FirebaseAuth
@@ -15,14 +16,12 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var listaAutos: [Auto] = []
     var autoSeleccionado: Auto?
     
-    @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var lblBienvenido: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imgLogo.image = UIImage(named: "logo")
         lblBienvenido.text = "BIENVENIDO \(nombre ?? "USUARIO")"
 
         tableView.delegate = self
