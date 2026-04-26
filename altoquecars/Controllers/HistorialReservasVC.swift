@@ -27,13 +27,15 @@ class HistorialReservasVC: UIViewController, UITableViewDelegate, UITableViewDat
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         
-        celda.lblMarcaModelo.text = "\(reserva.auto?.marca) - \(reserva.auto?.modelo)"
+        celda.lblMarcaModelo.text = "\(reserva.auto?.marca ?? "") - \(reserva.auto?.modelo ?? "")"
         celda.lblInicio.text = formatter.string(from: reserva.fechaInicio ?? Date.now)
         celda.lblFin.text = formatter.string(from: reserva.fechaFin ?? Date.now)
-        
+        celda.imgAuto.image = UIImage(named: reserva.auto?.imagen ?? "")
         return celda
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 110
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

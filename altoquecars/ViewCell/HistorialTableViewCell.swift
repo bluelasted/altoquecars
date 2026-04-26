@@ -13,6 +13,8 @@ class HistorialTableViewCell: UITableViewCell {
     @IBOutlet weak var lblInicio: UILabel!
     @IBOutlet weak var lblFin: UILabel!
     @IBOutlet weak var btnEstado: UIButton!
+    @IBOutlet weak var imgAuto: UIImageView!
+    
     
 
 }

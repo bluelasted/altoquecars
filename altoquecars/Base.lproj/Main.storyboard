@@ -401,16 +401,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlL-Vg-r3P">
-                                                    <rect key="frame" x="225" y="35" width="78" height="21"/>
+                                                    <rect key="frame" x="225" y="35" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFQ-aF-tAy">
-                                                    <rect key="frame" x="225" y="64" width="78" height="21"/>
+                                                    <rect key="frame" x="225" y="64" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -433,6 +433,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="btnEstado" destination="rI3-Ea-ut3" id="95a-cW-dA6"/>
+                                            <outlet property="imgAuto" destination="d7A-Vd-EDZ" id="Apd-Dc-yBj"/>
                                             <outlet property="lblFin" destination="XFQ-aF-tAy" id="HG8-AC-Mtd"/>
                                             <outlet property="lblInicio" destination="hlL-Vg-r3P" id="d8g-em-9P4"/>
                                             <outlet property="lblMarcaModelo" destination="1Dy-ag-Qfv" id="3Yq-KW-Mfd"/>
