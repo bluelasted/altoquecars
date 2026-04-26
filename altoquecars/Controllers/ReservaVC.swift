@@ -29,10 +29,10 @@ class ReservaVC: UIViewController {
         if let auto = autoSeleccionado {
             lblAuto.text = "\(auto.marca) \(auto.modelo)"
             imgAuto.image = UIImage(named: auto.imagen)
-            lblYear.text = "Año: \(auto.year ?? 0)"
-            lblKm.text = "Km: \(auto.km ?? 0)"
-            lblPlaca.text = "Placa: \(auto.placa ?? "AAA111")"
-            lblPrecio.text = "Precio: $ \(auto.precio)"
+            lblYear.text = "\(auto.year ?? 0)"
+            lblKm.text = "\(auto.km ?? 0) KM"
+            lblPlaca.text = "\(auto.placa ?? "AAA111")"
+            lblPrecio.text = "$ \(auto.precio)"
         } else {
             lblAuto.text = "Auto no seleccionado"
         }
@@ -59,18 +59,20 @@ class ReservaVC: UIViewController {
         let autoData: [String : Any] = [
             "idAuto": autoSeleccionado?.autoId,
             "marca":  autoSeleccionado?.marca,
+            "modelo": autoSeleccionado?.modelo,
             "year":   autoSeleccionado?.year,
             "placa":  autoSeleccionado?.placa,
             "km":     autoSeleccionado?.km,
-            "precio": autoSeleccionado?.precio
+            "precio": autoSeleccionado?.precio,
+            "imagen": autoSeleccionado?.imagen
         ]
         
         let reservaData: [String : Any] = [
             "usuario" : usuarioRef,
             "auto" : autoData,
-            "fechaInicio" : dpFechaInicio.date,
-            "fechaFin" : dpFechaFin.date,
-            "fechaReserva" : Date.now
+            "fechaInicio": Timestamp(date: dpFechaInicio.date),
+            "fechaFin": Timestamp(date: dpFechaFin.date),
+            "fechaReserva": Timestamp(date: Date())
         ]
         
         guard let auto = autoSeleccionado else {
@@ -80,6 +82,37 @@ class ReservaVC: UIViewController {
             return
         }
         
+        //
+        let nuevaReservaRef = db.collection("Reservas").document()
+
+        // 2. Batch — escribe todo junto o nada
+        let batch = db.batch()
+
+        // 3. Guardar la reserva
+        batch.setData(reservaData, forDocument: nuevaReservaRef)
+
+        // 4. Agregar el ID de la reserva al array del usuario
+        batch.updateData([
+            "Reservas": FieldValue.arrayUnion([nuevaReservaRef.documentID])  // 👈 agrega sin pisar los anteriores
+        ], forDocument: usuarioRef)
+        
+        batch.commit { error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    let alerta = UIAlertController(title: "Error", message: "No se pudo guardar: \(error.localizedDescription)", preferredStyle: .alert)
+                    alerta.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alerta, animated: true)
+                } else {
+                    let alerta = UIAlertController(title: "Éxito", message: "Reserva enviada correctamente", preferredStyle: .alert)
+                    alerta.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        //self.navigationController?.popViewController(animated: true)
+                    })
+                    self.present(alerta, animated: true)
+                }
+            }
+        }
+        //
+        /*
         db.collection("Reservas").addDocument(data:reservaData){
             error in
             if let error = error {
@@ -94,7 +127,7 @@ class ReservaVC: UIViewController {
                 })
                 self.present(alerta, animated: true)
             }
-        }
+        }*/
         /*
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy HH:mm"

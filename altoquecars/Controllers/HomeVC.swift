@@ -68,6 +68,14 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    @IBAction func btnHistorial(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let historialVC = storyboard.instantiateViewController(withIdentifier: "Historial") as? HistorialReservasVC {
+            historialVC.modalPresentationStyle = .fullScreen
+            self.present(historialVC, animated: true)
+        }
+    }
+    
     @IBAction func btnCerrarSesion(_ sender: UIButton) {
         do {
             try Auth.auth().signOut()
