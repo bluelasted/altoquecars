@@ -9,5 +9,10 @@ import Foundation
 
 struct Usuario{
     let correo: String
-    let clave: String
+    let clave: String?
+    let nombres: String?
+    let fechaNac: Date?
+    let dni: String?
+    let telefono: String?
+    let reservas: [Reserva]?
 }

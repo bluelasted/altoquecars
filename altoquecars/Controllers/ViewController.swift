@@ -54,14 +54,18 @@ class ViewController: UIViewController {
                         if let vendedorVC = storyboard.instantiateViewController(withIdentifier: "HomeVendedor") as? HomeVendedorVC {
                             vendedorVC.correo = correo
                             vendedorVC.modalPresentationStyle = .fullScreen
-                            self.present(vendedorVC, animated: true)
+                            DispatchQueue.main.async {
+                                self.present(vendedorVC, animated: true)
+                            }
                         }
                     } else {
                         if let homeVC = storyboard.instantiateViewController(withIdentifier: "Home") as? HomeVC {
                             homeVC.correo = correo
                             homeVC.nombre = nombre
                             homeVC.modalPresentationStyle = .fullScreen
-                            self.present(homeVC, animated: true)
+                            DispatchQueue.main.async {
+                                self.present(homeVC, animated: true)
+                            }
                         }
                     }
                 }

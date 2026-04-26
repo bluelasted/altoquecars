@@ -5,10 +5,10 @@
 //  Created by Jairo on 11/04/26.
 //
 // Jennifer add btnCerrar
-//Jennifer modificacion de algunas cosas
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var correo: String?
@@ -16,25 +16,22 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var listaAutos: [Auto] = []
     var autoSeleccionado: Auto?
     
+    let db = Firestore.firestore()
+    
+    @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var lblBienvenido: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imgLogo.image = UIImage(named: "logo")
         lblBienvenido.text = "BIENVENIDO \(nombre ?? "USUARIO")"
 
         tableView.delegate = self
         tableView.dataSource = self
-
-        listaAutos.append(Auto(id: "1", marca: "Porsche", modelo: "911", precio: 65200, imagen: "porsche911"))
-        listaAutos.append(Auto(id: "2", marca: "Toyota", modelo: "FJ Cruiser 2010", precio: 45000, imagen: "toyotafjcruiser2010"))
-        listaAutos.append(Auto(id: "3", marca: "Honda", modelo: "Pilot 2026", precio: 40000, imagen: "hondapilot2026"))
-        listaAutos.append(Auto(id: "4", marca: "BMW", modelo: "M4", precio: 65100, imagen: "bmwm4"))
-        listaAutos.append(Auto(id: "5", marca: "Toyota", modelo: "Prado 2026", precio: 72000, imagen: "toyotaprado2026"))
-        listaAutos.append(Auto(id: "6", marca: "BMW", modelo: "X6", precio: 83500, imagen: "bmwx6"))
-        listaAutos.append(Auto(id: "7", marca: "Honda", modelo: "CR-V Hybrid 2026", precio: 47800, imagen: "hondacrvhybrid2026"))
-        listaAutos.append(Auto(id: "8", marca: "Ferrari", modelo: "SP8", precio: 380000, imagen: "ferrarisp8"))
+        
+        obtenerAutos()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,6 +81,32 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let accion = UIAlertAction(title: "OK", style: .default)
             alerta.addAction(accion)
             present(alerta, animated: true)
+        }
+    }
+    func obtenerAutos(){
+        db.collection("Autos").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                self.listaAutos.removeAll()
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let id = document.documentID
+                    let marca = data["marca"] as! String
+                    let modelo = data["modelo"] as! String
+                    let precio = data["precio"] as! Double
+                    let imagen = data["imagen"] as! String
+                    let year = data["year"] as! Int
+                    let km = data["km"] as! Int
+                    let placa = data["placa"] as! String
+                    
+                    let auto = Auto(autoId: id, marca: marca, modelo: modelo, year: year,km: km, placa: placa, precio: precio, imagen: imagen)
+                    self.listaAutos.append(auto)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 }

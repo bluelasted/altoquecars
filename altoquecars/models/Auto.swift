@@ -7,9 +7,12 @@
 import Foundation
 
 struct Auto {
-    let id: String
+    let autoId: String
     let marca: String
     let modelo: String
+    let year: Int?
+    let km: Int?
+    let placa: String?
     let precio: Double
     let imagen: String
 }
