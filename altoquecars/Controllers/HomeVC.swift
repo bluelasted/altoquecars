@@ -5,6 +5,7 @@
 //  Created by Jairo on 11/04/26.
 //
 // Jennifer add btnCerrar
+// Jennifer's improvements
 
 import UIKit
 import FirebaseAuth
@@ -30,6 +31,11 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.bounces = false
+        tableView.alwaysBounceVertical = false
+        tableView.contentInset = .zero
+        tableView.scrollIndicatorInsets = .zero
+        tableView.tableFooterView = UIView()
         
         obtenerAutos()
     }
