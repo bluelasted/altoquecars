@@ -103,10 +103,16 @@ class ReservaVC: UIViewController {
                     alerta.addAction(UIAlertAction(title: "OK", style: .default))
                     self.present(alerta, animated: true)
                 } else {
-                    let alerta = UIAlertController(title: "Éxito", message: "Reserva enviada correctamente", preferredStyle: .alert)
+                    let alerta = UIAlertController(
+                        title: "Reserva realizada",
+                        message: "En breve un administrador se comunicará con usted para concluir la renta.",
+                        preferredStyle: .alert
+                    )
+
                     alerta.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                        //self.navigationController?.popViewController(animated: true)
+                        self.navigationController?.popViewController(animated: true)
                     })
+
                     self.present(alerta, animated: true)
                 }
             }
