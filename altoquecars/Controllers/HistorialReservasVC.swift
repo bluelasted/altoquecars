@@ -20,6 +20,40 @@ class HistorialReservasVC: UIViewController, UITableViewDelegate, UITableViewDat
         listaReservas.count
     }
     
+    @IBAction func btnBackTapped(_ sender: UIButton) {
+
+         
+
+          if let navigationController = self.navigationController {
+
+             
+
+            for controlador in navigationController.viewControllers {
+
+           
+
+              if controlador is HomeVC {
+
+                navigationController.popToViewController(controlador, animated: true)
+
+                return
+
+              }
+
+            }
+
+             
+
+          } else {
+
+       
+
+            self.dismiss(animated: true, completion: nil)
+
+          }
+
+        }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "cellHistorial", for: indexPath) as! HistorialTableViewCell
         let reserva = listaReservas[indexPath.row]

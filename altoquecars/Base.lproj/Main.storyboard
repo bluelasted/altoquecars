@@ -425,25 +425,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rI3-Ea-ut3">
-                                                    <rect key="frame" x="225" y="91" width="78" height="23"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Verificando..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHh-gM-3Pm">
+                                                    <rect key="frame" x="219" y="93" width="100" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="tinted">
-                                                        <attributedString key="attributedTitle">
-                                                            <fragment content="Button">
-                                                                <attributes>
-                                                                    <font key="NSFont" size="13" name="AndaleMono"/>
-                                                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                    </buttonConfiguration>
-                                                </button>
+                                                    <color key="backgroundColor" red="0.67091542479999999" green="0.77995711570000004" blue="0.85791784520000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="btnEstado" destination="rI3-Ea-ut3" id="95a-cW-dA6"/>
                                             <outlet property="imgAuto" destination="d7A-Vd-EDZ" id="Apd-Dc-yBj"/>
                                             <outlet property="lblFin" destination="XFQ-aF-tAy" id="HG8-AC-Mtd"/>
                                             <outlet property="lblInicio" destination="hlL-Vg-r3P" id="d8g-em-9P4"/>
@@ -452,6 +444,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyF-Xp-3P8">
+                                <rect key="frame" x="143" y="760" width="110" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="REGRESAR"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="Zem-gT-alk" eventType="touchUpInside" id="xX1-2X-3NR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5b2-55-CWI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
