@@ -70,6 +70,41 @@ class HistorialReservasVC: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        let batch = db.batch()
+        if editingStyle == .delete {
+            let reserva = listaReservas[indexPath.row]
+            //MOSTRAR PREGUNTA DE CONFIMRACION DE BORRADO
+            let alerta = UIAlertController(title: "Confirmacion de borrado", message: "Seguro deseas borrar?", preferredStyle: .alert)
+            let cancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+            let aceptar = UIAlertAction(title: "Aceptar", style: .destructive)
+            {_ in
+                //eliminar en firebase
+                let reservacionRef = self.db.collection("Reservas").document(reserva.id ?? "")
+                let usuarioRef = self.db.collection("Usuario").document(reserva.usuarioId ?? "")
+                
+                batch.deleteDocument(reservacionRef)
+                batch.updateData([
+                    "Reservas": FieldValue.arrayRemove([reserva.id ?? ""])
+                ], forDocument: usuarioRef)
+                batch.commit { error in
+                    if let error = error {
+                        print("Error al eliminar: \(error.localizedDescription)")
+                    } else {
+                        print("Reserva eliminada correctamente")
+                        self.listaReservas.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+            alerta.addAction(cancelar)
+            alerta.addAction(aceptar)
+            present(alerta, animated: true)
+        }
+    }
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Eliminar"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +119,7 @@ class HistorialReservasVC: UIViewController, UITableViewDelegate, UITableViewDat
         let usuarioRef = db.collection("Usuario").document(uid)
         
         db.collection("Reservas")
-            .whereField("usuario", isEqualTo: usuarioRef)  // 👈 busca por la referencia
+            .whereField("usuario", isEqualTo: usuarioRef)  // Busca por la referencia
             .getDocuments { snapshot, error in
                 if let error = error {
                     print("Error: \(error.localizedDescription)")
